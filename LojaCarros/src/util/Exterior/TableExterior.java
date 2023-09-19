@@ -88,7 +88,7 @@ public class TableExterior<T, K> {
         if(this.tabela[posicao] == null) throw new VeiculoNaoEncontrado("Veículo não encontrado !");
         No<T, K> noHash = this.tabela[posicao];
         System.out.println("Removendo");
-        if(noHash.getChave().equals((Integer)chave)){
+        if(noHash.getChave().equals(chave)){
             this.tabela[posicao] = noHash.getProx();
             noHash.setProx(null);
             noHash = null;
@@ -98,7 +98,7 @@ public class TableExterior<T, K> {
         }
         No<T, K> anterior = null;
         while (noHash != null) {
-            if(noHash.getChave().equals((Integer)chave)) break;
+            if(noHash.getChave().equals(chave)) break;
             anterior = noHash;
             noHash = noHash.getProx();
         }
