@@ -1,5 +1,6 @@
 package util.Aberto;
 
+import db.handlers.VeiculoNaoEncontrado;
 import util.Node.No;
 
 public class TableAberta<T, K> {
@@ -58,12 +59,17 @@ public class TableAberta<T, K> {
 
     public void remover(K chave){
         Integer posicao = hash((Integer)chave);
+        No<T, K> index = null;
+        System.out.println("Removendo");
         while (this.tabela[posicao] != null) {
-            if(this.tabela[posicao].getChave().equals(chave)) this.tabela[posicao] = null;
+            if(this.tabela[posicao].getChave().equals(chave)) {
+                index = this.tabela[posicao];
+                this.tabela[posicao] = null;
+                this.size--;
+            }
             posicao = (posicao+1)%this.M;
         }
-        this.size--;
-        System.out.println("Removendo");
+        if(index == null) throw new VeiculoNaoEncontrado("Veículo não encontrado !");
         System.out.println("Fator de carga = " + fatorDeCarga());
     }
 
@@ -82,7 +88,7 @@ public class TableAberta<T, K> {
             if(this.tabela[posicao].getChave().equals(chave)) return this.tabela[posicao].getValor();
             posicao = (posicao+1)%this.M;
         }
-        return null;
+        throw new VeiculoNaoEncontrado("Veículo não encontrado !");
     }
 
     public String print(){

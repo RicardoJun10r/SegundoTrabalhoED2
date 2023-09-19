@@ -64,11 +64,17 @@ public class VeiculoService extends UnicastRemoteObject implements IServer {
 
     @Override
     public void atualizar(Veiculo novo, String renavam) throws RemoteException {
-        if(this.type){
-            this.tableExterior.att(novo, Integer.parseInt( renavam ));
-        } else {
-            this.tableAberta.att(novo, Integer.parseInt( renavam ));
+        
+        Veiculo veiculo = this.buscar( renavam);
+        
+        if(attCampos(novo, veiculo)){
+            if(this.type){
+                this.tableExterior.att(veiculo, Integer.parseInt( renavam ));
+            } else {
+                this.tableAberta.att(veiculo, Integer.parseInt( renavam ));
+            }
         }
+        
     }
 
     @Override
@@ -87,6 +93,39 @@ public class VeiculoService extends UnicastRemoteObject implements IServer {
         } else {
             return this.tableAberta.fatorDeCarga();
         }
+    }
+
+    private Boolean attCampos(Veiculo novo, Veiculo velho){
+
+        boolean hasAtt = false;
+
+        if(novo.getNome() != null && !novo.getNome().isEmpty() && !novo.getNome().equalsIgnoreCase("*")){
+            velho.setNome(novo.getNome());
+            hasAtt = true;
+        }
+        if(novo.getModelo() != null && !novo.getModelo().isEmpty() && !novo.getModelo().equalsIgnoreCase("*")){
+            velho.setModelo(novo.getModelo());
+            hasAtt = true;
+        }
+        if(novo.getPlaca() != null && !novo.getPlaca().isEmpty() && !novo.getPlaca().equalsIgnoreCase("*")){
+            velho.setPlaca(novo.getPlaca());
+            hasAtt = true;
+        }
+        if(novo.getDataFabricacao() != null && !novo.getDataFabricacao().equals("*")){
+            velho.setDataFabricacao(novo.getDataFabricacao());
+            hasAtt = true;
+        }
+        if(novo.getCondutor().getNome() != null && !novo.getCondutor().getNome().isEmpty() && !novo.getCondutor().getNome().equalsIgnoreCase("*")){
+            velho.getCondutor().setNome(novo.getCondutor().getNome());
+            hasAtt = true;
+        }
+        if(novo.getCondutor().getCpf() != null && !novo.getCondutor().getCpf().isEmpty() && !novo.getCondutor().getCpf().equalsIgnoreCase("*")){
+            velho.getCondutor().setCpf(novo.getCondutor().getCpf());
+            hasAtt = true;
+        }
+
+        return hasAtt;
+        
     }
     
 }

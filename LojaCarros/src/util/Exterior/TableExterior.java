@@ -1,5 +1,6 @@
 package util.Exterior;
 
+import db.handlers.VeiculoNaoEncontrado;
 import util.Node.No;
 
 public class TableExterior<T, K> {
@@ -50,7 +51,7 @@ public class TableExterior<T, K> {
             if(noHash.getChave() == chave) return noHash.getValor();
             noHash = noHash.getProx();
         }
-        return null;
+        throw new VeiculoNaoEncontrado("Veículo não encontrado !");
     }
 
     public void att(T valor, K chave){
@@ -84,6 +85,7 @@ public class TableExterior<T, K> {
 
     public void remover(K chave){
         Integer posicao = hash((Integer)chave);
+        if(this.tabela[posicao] == null) throw new VeiculoNaoEncontrado("Veículo não encontrado !");
         No<T, K> noHash = this.tabela[posicao];
         System.out.println("Removendo");
         if(noHash.getChave().equals((Integer)chave)){
@@ -92,16 +94,16 @@ public class TableExterior<T, K> {
             noHash = null;
             this.size--;
             System.out.println("Fator de carga = " + fatorDeCarga());
-
             return;
         }
         No<T, K> anterior = null;
         while (noHash != null) {
-            if(noHash.getChave().equals((Integer)chave) || noHash.getProx() == null) break;
+            if(noHash.getChave().equals((Integer)chave)) break;
             anterior = noHash;
             noHash = noHash.getProx();
         }
 
+        if(noHash == null) throw new VeiculoNaoEncontrado("Veículo não encontrado !");
         anterior.setProx(noHash.getProx());
         noHash.setProx(null);
         noHash = null;
