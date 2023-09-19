@@ -48,7 +48,7 @@ public class TableExterior<T, K> {
         No<T, K> noHash = this.tabela[posicao];
         System.out.println("Buscando");
         while (noHash != null) {
-            if(noHash.getChave() == chave) return noHash.getValor();
+            if(noHash.getChave().equals(chave)) return noHash.getValor();
             noHash = noHash.getProx();
         }
         throw new VeiculoNaoEncontrado("Veículo não encontrado !");

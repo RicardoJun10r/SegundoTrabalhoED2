@@ -10,7 +10,7 @@ public class Servidor {
     
      public static void main(String[] args) throws IOException {
         try {
-            IServer veiculoService = new VeiculoService(false);
+            IServer veiculoService = new VeiculoService(true);
             String objName = "rmi://localhost/lojaCarros";
 			
             System.out.println("Inicializando...");
