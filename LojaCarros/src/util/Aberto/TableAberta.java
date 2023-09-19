@@ -24,7 +24,7 @@ public class TableAberta<T, K> {
         Integer posicao = hash((Integer)chave);
 
         while(this.tabela[posicao] != null){
-            if(this.tabela[posicao].getChave() == chave) break;
+            if(this.tabela[posicao].getChave().equals(chave)) break;
             posicao = (posicao+1)%this.M;
         }
 
@@ -59,7 +59,7 @@ public class TableAberta<T, K> {
     public void remover(K chave){
         Integer posicao = hash((Integer)chave);
         while (this.tabela[posicao] != null) {
-            if(this.tabela[posicao].getChave() == chave) this.tabela[posicao] = null;
+            if(this.tabela[posicao].getChave().equals(chave)) this.tabela[posicao] = null;
             posicao = (posicao+1)%this.M;
         }
         this.size--;
@@ -79,7 +79,7 @@ public class TableAberta<T, K> {
         Integer posicao = hash((Integer)chave);
         System.out.println("Buscando");
         while (this.tabela[posicao] != null) {
-            if(this.tabela[posicao].getChave() == chave) return this.tabela[posicao].getValor();
+            if(this.tabela[posicao].getChave().equals(chave)) return this.tabela[posicao].getValor();
             posicao = (posicao+1)%this.M;
         }
         return null;
